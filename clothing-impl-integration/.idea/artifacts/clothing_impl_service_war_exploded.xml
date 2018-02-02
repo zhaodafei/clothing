@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="clothing-impl-service:war exploded">
+    <output-path>$PROJECT_DIR$/../clothing-impl-service/target/clothing-impl-service</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="clothing-impl-service" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/../clothing-impl-service/target/clothing-impl-service/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="clothing-impl-service/web/Web" />
+    </root>
+  </artifact>
+</component>

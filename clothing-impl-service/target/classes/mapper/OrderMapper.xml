@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hegx.dao.OrderDao">
+
+	<!--仪器级别表 ，下面引用，方便修改表名 -->
+	<sql id="t_order"> t_order </sql>
+
+	<!-- sql片段，查询用的字段,避免用“*” -->
+	<sql id="selectFieldSQL">
+		<![CDATA[
+		SELECT
+		  orderId,
+		  fashionName,
+		  codeId,
+		  userId,
+		  customName,
+		  className,
+		  phoneNumber,
+		  qq,
+		  color,
+		  otherFashion,
+		  money,
+		  earnest,
+		  print,
+		  getOrderDate,
+		  sendDate,
+		  remarks,
+		  deliveryId,
+		  createDate,
+		  endReason,
+		  endDate,
+		  belongId,
+		  status,
+		  orderNumber
+		]]>
+	</sql>
+
+	<resultMap id="BeanMap" type="com.hegx.dto.OrderEntityDto">
+		<id column="orderId" property="orderId"  jdbcType="INTEGER"/>
+		<result column="fashionName" property="fashionName" jdbcType="VARCHAR"/>
+		<result column="codeId" property="codeId" jdbcType="INTEGER"/>
+		<result column="userId" property="userId" jdbcType="INTEGER"/>
+		<result column="className" property="className" jdbcType="VARCHAR" />
+		<result column="customName" property="customName" jdbcType="VARCHAR" />
+		<result column="phoneNumber" property="phoneNumber" jdbcType="VARCHAR"/>
+		<result column="qq" property="qq" jdbcType="VARCHAR" />
+		<result column="color" property="color" jdbcType="VARCHAR"  />
+		<result column="otherFashion" property="otherFashion" jdbcType="VARCHAR"/>
+		<result column="money" property="money" jdbcType="VARCHAR"/>
+		<result column="earnest" property="earnest" jdbcType="VARCHAR"/>
+		<result column="print" property="print" jdbcType="VARCHAR" />
+		<result column="getOrderDate" property="getOrderDate" jdbcType="DATE" />
+		<result column="sendDate" property="sendDate" jdbcType="DATE" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="deliveryId" property="deliveryId" jdbcType="INTEGER"/>
+		<result column="createDate" property="createDate" jdbcType="DATE" />
+		<result column="endReason" property="endReason" jdbcType="VARCHAR" />
+		<result column="belongId" property="belongId" jdbcType="INTEGER"/>
+		<result column="status" property="status" jdbcType="DATE"/>
+		<result column="orderNumber" property="orderNumber" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<!-- 新增 -->
+	<insert id="insert">
+		INSERT INTO
+		<include refid="t_order" />
+		(
+		fashionName,
+		codeId,
+		userId,
+		customName,
+		className,
+		phoneNumber,
+		qq,
+		color,
+		otherFashion,
+		money,
+		earnest,
+		print,
+		getOrderDate,
+		sendDate,
+		remarks,
+		deliveryId,
+		createDate,
+		endReason,
+		endDate,
+		belongId,
+		status,
+		orderNumber
+		) VALUES (
+		#{fashionName},
+		#{codeId},
+		#{userId},
+		#{customName},
+		#{className},
+		#{phoneNumber},
+		#{qq},
+		#{color},
+		#{otherFashion},
+		#{money},
+		#{earnest},
+		#{print},
+		#{getOrderDate},
+		#{sendDate},
+		#{remarks},
+		#{deliveryId},
+		#{createDate},
+		#{endReason},
+		#{endDate},
+		#{belongId},
+		#{status},
+		#{orderNumber}
+		)
+	</insert>
+
+	<!-- 更新 -->
+	<update id="update">
+		UPDATE
+		<include refid="t_order" />
+		<set>
+			<if test="fashionName != null">
+				fashionName = #{fashionName},
+			</if>
+			<if test="codeId != null">
+				codeId = #{codeId},
+			</if>
+			<if test="userId != null">
+				userId = #{userId},
+			</if>
+			<if test="customName != null">
+				customName = #{customName},
+			</if>
+			<if test="className != null">
+				className = #{className},
+			</if>
+			<if test="phoneNumber != null">
+				phoneNumber = #{phoneNumber},
+			</if>
+			<if test="qq != null">
+				qq = #{qq},
+			</if>
+			<if test="color != null">
+				color = #{color},
+			</if>
+			<if test="otherFashion != null">
+				otherFashion = #{otherFashion},
+			</if>
+			<if test="money != null">
+				money = #{money},
+			</if>
+			<if test="earnest != null">
+				earnest = #{earnest},
+			</if>
+			<if test="print != null">
+				print = #{print},
+			</if>
+			<if test="sendDate != null">
+				sendDate = #{sendDate},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks},
+			</if>
+			<if test="deliveryId != null">
+				deliveryId = #{deliveryId},
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate},
+			</if>
+			<if test="endReason != null">
+				endReason = #{endReason},
+			</if>
+			<if test="endDate != null">
+				endDate = #{endDate},
+			</if>
+			<if test="belongId != null">
+				belongId = #{belongId},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="orderNumber != null">
+				orderNumber = #{orderNumber}
+			</if>
+
+		</set>
+		WHERE orderId = #{orderId}
+	</update>
+
+
+	<!--真删除 -->
+	<delete id="deleteByOrderId" parameterType="Long">
+		DELETE FROM
+		<include refid="t_order" />
+		WHERE orderId = #{orderId}
+	</delete>
+
+	<!-- 根据id查询 -->
+	<select id="getByOrderId" parameterType="Long" resultMap="BeanMap">
+		<include refid="selectFieldSQL" />
+		FROM
+		<include refid="t_order" />
+		<![CDATA[
+		 WHERE orderId = #{orderId} ORDER BY orderId DESC
+		]]>
+	</select>
+
+
+	<!-- 查询所有未删除的数据 -->
+	<select id="getAll" resultMap="BeanMap">
+		<include refid="selectFieldSQL" />
+		FROM
+		<include refid="t_order" />
+		ORDER BY orderId DESC
+	</select>
+
+	<!-- 查询所有流程状态的订单 -->
+	<select id="getAllForFlow" parameterType="Short" resultMap="BeanMap">
+		<include refid="selectFieldSQL" />
+		FROM
+		<include refid="t_order" />
+		WHERE status = #{status} ORDER BY orderId DESC
+	</select>
+
+	<!-- 根据用户查询所有订单 -->
+	<select id="myOrder" parameterType="Integer" resultMap="BeanMap">
+		<include refid="selectFieldSQL" />
+		FROM
+		<include refid="t_order" />
+		WHERE userId = #{userId} ORDER BY orderId DESC
+	</select>
+
+
+</mapper>

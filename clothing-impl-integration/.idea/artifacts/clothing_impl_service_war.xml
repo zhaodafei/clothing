@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="clothing-impl-service:war">
+    <output-path>$PROJECT_DIR$/../clothing-impl-service/target</output-path>
+    <root id="archive" name="clothing-impl-service.war">
+      <element id="artifact" artifact-name="clothing-impl-service:war exploded" />
+    </root>
+  </artifact>
+</component>
